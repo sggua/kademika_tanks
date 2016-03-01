@@ -11,12 +11,13 @@ public class Tank extends JFrame {
     public final static int DELAY = 100;
     public final static byte STEP_LENGTH = 7;
     public final static int FIRST_STEP_DELTA = BattleField.QDRNT_SIZE % STEP_LENGTH;
-    public final static byte UP = ActionField.UP;
-    public final static byte DOWN = ActionField.DOWN;
-    public final static byte LEFT = ActionField.LEFT;
-    public final static byte RIGHT = ActionField.RIGHT;
+    public final static To UP = To.UP;
+    public final static To DOWN = To.DOWN;
+    public final static To LEFT = To.LEFT;
+    public final static To RIGHT = To.RIGHT;
 
-    private int x, y, direction = 1;
+    private int x, y;
+    private To direction;
     private ActionField af;
     private BattleField bf;
     private Bullet b;
@@ -30,7 +31,7 @@ public class Tank extends JFrame {
         this.direction = RIGHT;
     }
 
-    public Tank(ActionField af, BattleField bf, int x, int y, int direction) {
+    public Tank(ActionField af, BattleField bf, int x, int y, To direction) {
         this.af = af;
         this.bf = bf;
         this.x = x;
@@ -47,33 +48,64 @@ public class Tank extends JFrame {
         return y;
     }
 
-    public void updateX(int x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public void updateY(int y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public int getDirection() {
+    public void setXY(int x, int y) {
+        setX(x);
+        setY(y);
+    }
+
+    public void updateX(int delta){
+        this.x+=delta;
+    }
+    public void updateY(int delta){
+        this.y+=delta;
+    }
+
+    public void updateXY (int deltaX, int deltaY){
+        updateX(deltaX);
+        updateY(deltaY);
+    }
+
+    public void setQuadrantX(int x){
+        setX(ActionField.getQuadrantCoordX(x));
+    }
+
+    public void setQuadrantY(int y){
+        setY(ActionField.getQuadrantCoordY(y));
+    }
+
+    public void setQuadrantXY(int x, int y){
+        setQuadrantX(x);
+        setQuadrantY(y);
+    }
+
+
+    public To getDirection() {
         return direction;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(To direction) {
         this.direction = direction;
     }
 
-    public void turn(int direction) {
+    public void turn(To direction) {
         this.direction = direction;
         af.processTurn(this, direction);
     }
 
-    void move(int direction) throws InterruptedException {
+    void move(To direction) throws InterruptedException {
         this.direction = direction;
         af.processMove(this, direction);
     }
 
-    boolean canMove(int direction) {
+    boolean canMove(To direction) {
         return !((direction == UP && this.y < BattleField.QDRNT_SIZE) ||
                 (direction == DOWN && this.y + BattleField.QDRNT_SIZE > MAX_COORD) ||
                 (direction == LEFT && this.x < BattleField.QDRNT_SIZE) ||
@@ -82,15 +114,13 @@ public class Tank extends JFrame {
 
     public void fire(Bullet b) throws Exception {
         this.b = b;
-        af.processFire(this,b);
+        af.processFire(this);
     }
 
     public void setRandomPosition() {
         int cornerSize = BattleField.FIELD_SIZE;  // size of left down corner
-        this.x = ActionField.getQuadrantCoordX(
-                intRandom(1, cornerSize)
-        );
-        this.y = ActionField.getQuadrantCoordY(
+        setQuadrantXY(
+                intRandom(1, cornerSize),
                 intRandom(BattleField.FIELD_SIZE - cornerSize + 1, BattleField.FIELD_SIZE)
         );
         System.out.println("Random tank coords (x,y): " + this.x + "," + this.y);

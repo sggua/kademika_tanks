@@ -3,10 +3,11 @@ package im.sgg.ka.jp;
 public class Bullet {
     public final static int DELAY = 2;
 
-    public final static byte UP = ActionField.UP;
-    public final static byte DOWN = ActionField.DOWN;
-    public final static byte LEFT = ActionField.LEFT;
-    public final static byte RIGHT = ActionField.RIGHT;
+    public final static To UP = To.UP;
+    public final static To DOWN = To.DOWN;
+    public final static To LEFT = To.LEFT;
+    public final static To RIGHT = To.RIGHT;
+
 
     public final static int SIZE = 14;                    //	g.fillRect(bX, bY, 14, 14);
     public final static int HALF_SIZE = SIZE / 2;
@@ -17,13 +18,25 @@ public class Bullet {
 
     private int x;
     private int y;
-    private int direction;
+    private To direction;
     private boolean missed;
 
-    public Bullet(int x, int y, int direction) {
+    public Bullet(int x, int y, To direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+    }
+
+    public Bullet(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.direction = RIGHT;
+    }
+
+    public Bullet(Tank tank) {
+        this.x=tank.getX();
+        this.y=tank.getY();
+        this.direction = tank.getDirection();
     }
 
     public int getX() {
@@ -42,7 +55,7 @@ public class Bullet {
         this.y = y;
     }
 
-    public int getDirection() {
+    public To getDirection() {
         return direction;
     }
 

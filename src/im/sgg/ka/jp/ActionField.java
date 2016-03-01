@@ -5,12 +5,11 @@ import java.awt.*;
 
 public class ActionField extends JPanel {
     final boolean COLORED_MODE = false;
-    public final static byte UP = 1;
-    public final static byte DOWN = 2;
-    public final static byte LEFT = 3;
-    public final static byte RIGHT = 4;
+    public final static To UP = To.UP;
+    public final static To DOWN = To.DOWN;
+    public final static To LEFT = To.LEFT;
+    public final static To RIGHT = To.RIGHT;
 
-    private static String[] directionText = {"", "UP", "DOWN", "LEFT", "RIGHT"};
     private BattleField bf;
     private Tank tank;
     private Bullet bullet;
@@ -18,15 +17,19 @@ public class ActionField extends JPanel {
     public void runTheGame() throws Exception {
         this.bf.randomField();
         this.bf.printField();
-        this.tank.fire(new Bullet(tank.getX(),tank.getY(),tank.getDirection()));
+
     }
 
-    public void processMove(Tank t, int dir) throws InterruptedException {
+    public Tank getTank() {
+        return tank;
+    }
+
+    public void processMove(Tank t, To dir) throws InterruptedException {
         System.out.print("Moving from (" + t.getX() + ";" + t.getY() + ")");
         processTurn(t, dir);
         repaint();
         if (!t.canMove(dir)) {
-            System.out.println("\tCan't move " + directionText[dir]);
+            System.out.println("\tCan't move " + getDirectionText(dir));
             return;
         }
         int firstMove = BattleField.QDRNT_SIZE - Tank.FIRST_STEP_DELTA;
@@ -34,23 +37,23 @@ public class ActionField extends JPanel {
         while (pixelsToMove > 0) {
             if (dir == UP) {
                 System.out.print("\tUP   ");
-                t.updateY(t.getY() - Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateY(t.getY() - Tank.FIRST_STEP_DELTA);
+                t.setY(t.getY() - Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.setY(t.getY() - Tank.FIRST_STEP_DELTA);
 
             } else if (dir == DOWN) {
                 System.out.print("\tDOWN  ");
-                t.updateY(t.getY() + Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateY(t.getY() + Tank.FIRST_STEP_DELTA);
+                t.setY(t.getY() + Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.setY(t.getY() + Tank.FIRST_STEP_DELTA);
 
             } else if (dir == LEFT) {
                 System.out.print("\tLEFT  ");
-                t.updateX(t.getX() - Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateX(t.getX() - Tank.FIRST_STEP_DELTA);
+                t.setX(t.getX() - Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.setX(t.getX() - Tank.FIRST_STEP_DELTA);
 
             } else if (dir == RIGHT) {
                 System.out.print("\tRIGHT ");
-                t.updateX(t.getX() + Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateX(t.getX() + Tank.FIRST_STEP_DELTA);
+                t.setX(t.getX() + Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.setX(t.getX() + Tank.FIRST_STEP_DELTA);
             }
             repaint();
             Thread.sleep(Tank.DELAY);
@@ -60,14 +63,32 @@ public class ActionField extends JPanel {
 
     }
 
-    public void processTurn(Tank t, int dir) {
+    public void processTurn(Tank t, To dir) {
         t.setDirection(dir);
         repaint();
     }
 
-    public void processFire(Tank t, Bullet b) throws Exception {
-        int direction = t.getDirection();
-        b = new Bullet(t.getX() + 25, t.getY() + 25, direction);
+    public void processTurn180(Tank t){
+        switch (t.getDirection()) {
+            case LEFT:
+                t.setDirection(RIGHT);
+                break;
+            case RIGHT:
+                t.setDirection(LEFT);
+                break;
+            case UP:
+                t.setDirection(DOWN);
+                break;
+            case DOWN:
+                t.setDirection(UP);
+                break;
+        }
+
+    }
+
+    public void processFire(Tank t) throws Exception {
+        To direction = t.getDirection();
+        Bullet b = new Bullet(t.getX() + 25, t.getY() + 25, direction);
         this.bullet = b;
         b.setMissed(false);
         System.out.print("*" + getDirectionText(direction).charAt(0) + "*");
@@ -103,9 +124,8 @@ public class ActionField extends JPanel {
         return false;
     }
 
-    public static String getDirectionText(int n) {
-        if (directionText != null && n < directionText.length) return directionText[n];
-        else return "";
+    public static String getDirectionText(To way) {
+        return String.valueOf(way);
     }
 
     public static String getQuadrantXY(int v, int h) {                            // x,y => y_x
@@ -151,7 +171,7 @@ public class ActionField extends JPanel {
     public ActionField() throws Exception {
         bf = new BattleField(this);
         tank = new Tank(this, bf);
-        bullet = new Bullet(-100, -100, -1);
+        bullet = new Bullet(-100, -100);
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setLocation(750, 150);
@@ -205,11 +225,11 @@ public class ActionField extends JPanel {
         g.fillRect(tank.getX(), tank.getY(), 64, 64);
 
         g.setColor(new Color(0, 255, 0));
-        if (tank.getDirection() == 1) {
+        if (tank.getDirection() == UP) {
             g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
-        } else if (tank.getDirection() == 2) {
+        } else if (tank.getDirection() == DOWN) {
             g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
-        } else if (tank.getDirection() == 3) {
+        } else if (tank.getDirection() == LEFT) {
             g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
         } else {
             g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
