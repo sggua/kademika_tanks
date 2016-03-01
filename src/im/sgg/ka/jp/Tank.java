@@ -100,21 +100,30 @@ public class Tank extends JFrame {
         af.processTurn(this, direction);
     }
 
-    void move(To direction) throws InterruptedException {
-        this.direction = direction;
-        af.processMove(this, direction);
+    public void turn180(){
+        af.processTurn180(this);
     }
 
-    boolean canMove(To direction) {
+    void move() throws InterruptedException {
+        af.processMove(this);
+    }
+
+    void move(To direction) throws InterruptedException {
+        this.turn(direction);
+        af.processMove(this);
+    }
+
+    boolean canMove() {
+        To direction = this.getDirection();
         return !((direction == UP && this.y < BattleField.QDRNT_SIZE) ||
                 (direction == DOWN && this.y + BattleField.QDRNT_SIZE > MAX_COORD) ||
                 (direction == LEFT && this.x < BattleField.QDRNT_SIZE) ||
                 (direction == RIGHT && this.x + BattleField.QDRNT_SIZE > MAX_COORD));
     }
 
-    public void fire(Bullet b) throws Exception {
-        this.b = b;
-        af.processFire(this);
+    public void fire() throws Exception {
+        this.b = new Bullet(this);
+        af.processFire(b);
     }
 
     public void setRandomPosition() {

@@ -15,21 +15,26 @@ public class _Launcher {
 
         Tank t = af.getTank();
 
-        af.processTurn(t,RIGHT);
+        t.turn(RIGHT);
         t.setQuadrantXY(5,5);
-        af.processFire(t);
-        af.processTurn180(t);
-        af.processTurn(t,UP);
-        af.processFire(t);
-        af.processTurn180(t);
-        af.processFire(t);
-        af.processMove(t, RIGHT);
-        af.processMove(t, DOWN);
-        af.processMove(t, LEFT);
-        af.processFire(t);
-        af.processTurn180(t);
-        af.processFire(t);
-        af.processMove(t, UP);
+        t.fire();
+        t.turn180();
+        t.turn(UP);
+        t.fire();
+        t.turn180();
+        t.fire();
+        t.move(RIGHT);
+        t.move(DOWN);
+        t.move(LEFT);
+        t.fire();
+        t.turn180();
+        t.fire();
+        t.move();
+        t.fire();
+        t.move();
+        t.fire();
+        t.move();
+        t.fire();
 
     }
 }

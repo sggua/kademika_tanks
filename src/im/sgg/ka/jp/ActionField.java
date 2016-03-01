@@ -24,11 +24,12 @@ public class ActionField extends JPanel {
         return tank;
     }
 
-    public void processMove(Tank t, To dir) throws InterruptedException {
+    public void processMove(Tank t) throws InterruptedException {
         System.out.print("Moving from (" + t.getX() + ";" + t.getY() + ")");
-        processTurn(t, dir);
+        To dir=t.getDirection();
+        t.turn(dir);
         repaint();
-        if (!t.canMove(dir)) {
+        if (!t.canMove()) {
             System.out.println("\tCan't move " + getDirectionText(dir));
             return;
         }
@@ -37,23 +38,23 @@ public class ActionField extends JPanel {
         while (pixelsToMove > 0) {
             if (dir == UP) {
                 System.out.print("\tUP   ");
-                t.setY(t.getY() - Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.setY(t.getY() - Tank.FIRST_STEP_DELTA);
+                t.updateY(-Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateY(-Tank.FIRST_STEP_DELTA);
 
             } else if (dir == DOWN) {
                 System.out.print("\tDOWN  ");
-                t.setY(t.getY() + Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.setY(t.getY() + Tank.FIRST_STEP_DELTA);
+                t.updateY(Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateY(Tank.FIRST_STEP_DELTA);
 
             } else if (dir == LEFT) {
                 System.out.print("\tLEFT  ");
-                t.setX(t.getX() - Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.setX(t.getX() - Tank.FIRST_STEP_DELTA);
+                t.updateX(-Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateX(-Tank.FIRST_STEP_DELTA);
 
             } else if (dir == RIGHT) {
                 System.out.print("\tRIGHT ");
-                t.setX(t.getX() + Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.setX(t.getX() + Tank.FIRST_STEP_DELTA);
+                t.updateX(Tank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateX(Tank.FIRST_STEP_DELTA);
             }
             repaint();
             Thread.sleep(Tank.DELAY);
@@ -83,24 +84,27 @@ public class ActionField extends JPanel {
                 t.setDirection(UP);
                 break;
         }
-
+        repaint();
     }
 
-    public void processFire(Tank t) throws Exception {
-        To direction = t.getDirection();
-        Bullet b = new Bullet(t.getX() + 25, t.getY() + 25, direction);
+    public void processFire(Bullet b) throws Exception {
+        Tank t = this.tank;
+        To direction = this.tank.getDirection();
         this.bullet = b;
+        this.bullet.setX(t.getX() + 25);
+        this.bullet.setY(t.getY() + 25);
+        this.bullet.setDirection(direction);
         b.setMissed(false);
         System.out.print("*" + getDirectionText(direction).charAt(0) + "*");
         while (b.isVisible()) {
             if (direction == UP) {
-                b.setY(b.getY() - Bullet.STEP_LENGTH);
+                b.updateY(-Bullet.STEP_LENGTH);
             } else if (direction == DOWN) {
-                b.setY(b.getY() + Bullet.STEP_LENGTH);
+                b.updateY(Bullet.STEP_LENGTH);
             } else if (direction == LEFT) {
-                b.setX(b.getX() - Bullet.STEP_LENGTH);
+                b.updateX(-Bullet.STEP_LENGTH);
             } else if (direction == RIGHT) {
-                b.setX(b.getX() + Bullet.STEP_LENGTH);
+                b.updateX(Bullet.STEP_LENGTH);
             }
             if (b.isVisible()) {
                 if (processInterception(bf, b)) b.destroy();

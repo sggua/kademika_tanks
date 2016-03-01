@@ -59,6 +59,10 @@ public class Bullet {
         return direction;
     }
 
+    public void setDirection(To direction) {
+        this.direction = direction;
+    }
+
     public void updateX(int deltaX) {
         this.x += deltaX;
     }
