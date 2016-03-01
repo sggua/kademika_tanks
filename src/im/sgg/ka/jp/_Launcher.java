@@ -13,28 +13,5 @@ public class _Launcher {
         ActionField af = new ActionField();
         af.runTheGame();
 
-        Tank t = af.getTank();
-
-        t.turn(RIGHT);
-        t.setQuadrantXY(5,5);
-        t.fire();
-        t.turn180();
-        t.turn(UP);
-        t.fire();
-        t.turn180();
-        t.fire();
-        t.move(RIGHT);
-        t.move(DOWN);
-        t.move(LEFT);
-        t.fire();
-        t.turn180();
-        t.fire();
-        t.move();
-        t.fire();
-        t.move();
-        t.fire();
-        t.move();
-        t.fire();
-
     }
 }

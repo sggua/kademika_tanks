@@ -18,6 +18,26 @@ public class ActionField extends JPanel {
         this.bf.randomField();
         this.bf.printField();
 
+        tank.turn(RIGHT);
+        tank.setQuadrantXY(5,5);
+        tank.fire();
+        tank.turn180();
+        tank.turn(UP);
+        tank.fire();
+        tank.turn180();
+        tank.fire();
+        tank.move(RIGHT);
+        tank.move(DOWN);
+        tank.move(LEFT);
+        tank.fire();
+        tank.turn180();
+        tank.fire();
+        tank.move();
+        tank.fire();
+        tank.move();
+        tank.fire();
+        tank.move();
+        tank.fire();
     }
 
     public Tank getTank() {
