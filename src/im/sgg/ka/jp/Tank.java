@@ -8,7 +8,7 @@ import javax.swing.*;
  * kademika.com
  */
 public class Tank extends JFrame {
-    public final static int DELAY = 100;
+    public final static int DELAY = 50;
     public final static byte STEP_LENGTH = 7;
     public final static int FIRST_STEP_DELTA = BattleField.QDRNT_SIZE % STEP_LENGTH;
     public final static To UP = To.UP;
@@ -95,6 +95,33 @@ public class Tank extends JFrame {
         this.direction = direction;
     }
 
+
+    public void clean() throws Exception{
+        while (! bf.isClean()) {
+            for (int i=1;i<BattleField.FIELD_SIZE && !bf.isClean();i++) {
+                moveToQuadrant(BattleField.FIELD_SIZE+1-i, i);
+                if (i<3) {
+                    turn(UP); fire();
+                    turn(RIGHT); fire();
+                } else {
+                    clean(UP);
+                    clean(RIGHT);
+                    clean(DOWN);
+                    clean(LEFT);
+                }
+            }
+            if (!bf.isClean()){
+                moveToQuadrant(1, BattleField.FIELD_SIZE);
+                clean(DOWN);
+                clean(LEFT);
+            }
+
+        }
+        System.out.println("Cleaned!");
+    }
+    private void clean (To side) throws Exception{
+        turn(side); do fire();	while (! this.b.isMissed());
+    }
     public void turn(To direction) {
         this.direction = direction;
         af.processTurn(this, direction);
@@ -104,16 +131,16 @@ public class Tank extends JFrame {
         af.processTurn180(this);
     }
 
-    void move() throws InterruptedException {
+    public void move() throws InterruptedException {
         af.processMove(this);
     }
 
-    void move(To direction) throws InterruptedException {
+    public void move(To direction) throws InterruptedException {
         this.turn(direction);
         af.processMove(this);
     }
 
-    boolean canMove() {
+    public boolean canMove() {
         To direction = this.getDirection();
         return !((direction == UP && this.y < BattleField.QDRNT_SIZE) ||
                 (direction == DOWN && this.y + BattleField.QDRNT_SIZE > MAX_COORD) ||
@@ -135,15 +162,88 @@ public class Tank extends JFrame {
         System.out.println("Random tank coords (x,y): " + this.x + "," + this.y);
     }
 
-    public static int intRandom(int min, int max) {
+    public int intRandom(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
-
-    public void moveRandom() {
-
+    public To dirRandom() throws InterruptedException {
+        byte a = (byte) (System.currentTimeMillis() % 10);
+        int res;
+        if (a < 5) {
+            Thread.sleep (a * 10);
+            res = (int)(System.currentTimeMillis() % 4) + 1;
+        }
+        res = (int)(System.currentTimeMillis() % 4) + 1;
+        To dir = null;
+        switch (res) {
+            case 1:
+                dir = To.LEFT;              break;
+            case 2:
+                dir = To.RIGHT;             break;
+            case 3:
+                dir = To.UP;                break;
+            case 4:
+                dir = To.DOWN;              break;
+        }
+        return dir;
     }
 
-    public void moveToQuadrant(int v, int h) {
+    public void moveRandom() throws Exception {
+        To rnd=dirRandom();
+        turn(rnd);
+        if (this.canMove()) {
+            clearTheWay(rnd);
+            System.out.print("rnd");
+            move(rnd);
+        }
+    }
 
+    public void moveToQuadrant(int v, int h) throws Exception {
+        System.out.print("Current  coords: ("+this.getX()+";"+this.getY()+")\t");
+        if (v<1 || h<1 || v>BattleField.FIELD_SIZE || h> BattleField.FIELD_SIZE) {
+            System.out.println("Can't move to\tv="+v+" h="+h);
+            return;
+        }
+
+        int goalX = ActionField.getQuadrantCoordX(h);
+        int goalY = ActionField.getQuadrantCoordY(v);
+
+        System.out.println("\t\t\t\tv="+v+" h="+h+" goalX="+goalX+" goalY="+goalY);
+
+        int moveX = goalX-this.getX();
+        int moveY = goalY-this.getY();
+//        To direction=this.getDirection();
+        while ((moveX!=0) || (moveY!=0)) {
+            if (moveX!=0){   			// while - line; if - zigzag
+                if ( moveX > 0 ) {
+                    setDirection(RIGHT);
+                } else {
+                    setDirection(LEFT);
+                }
+                clearTheWay(direction);
+                this.move(direction);
+                moveX = goalX-this.getX();
+            }
+            if (moveY!=0){				// while - line; if - zigzag
+                if ( moveY > 0 ) {
+                    setDirection(DOWN);
+                } else { setDirection(UP);	}
+                clearTheWay(direction);
+                this.move(direction);
+                moveY = goalY-this.getY();
+            }
+        }
+        System.out.println("Moved to ("+this.getX()+";"+this.getY()+")");
+    }
+    private void clearTheWay(To direction) throws Exception {
+        turn(direction);repaint();
+        if (	//! BattleField.isEmptyXY(this.x, this.y) ||
+                (direction==UP && ! BattleField.isEmptyXY(this.x, this.y-1)) ||
+                (direction==DOWN && ! BattleField.isEmptyXY(this.x, this.y+BattleField.QDRNT_SIZE)) ||
+                (direction==LEFT && ! BattleField.isEmptyXY(this.x-1, this.y)) ||
+                (direction==RIGHT && ! BattleField.isEmptyXY(this.x+BattleField.QDRNT_SIZE, this.y))
+                ) {
+            System.out.println("Clear the way "+String.valueOf(direction)+"!");
+            fire();
+        }
     }
 }

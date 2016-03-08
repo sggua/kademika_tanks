@@ -12,7 +12,7 @@ public class BattleField {
     public final static byte QDRNT_SIZE = 64;
     final static int MAX_BRICKS_QTY = (int) (FIELD_SIZE * FIELD_SIZE / 1.5);
 
-    private String[][] battleField = new String[FIELD_SIZE][FIELD_SIZE];
+    private static String[][] battleField = new String[FIELD_SIZE][FIELD_SIZE];
 
     private ActionField af;
 
@@ -20,7 +20,7 @@ public class BattleField {
         this.af = af;
     }
 
-    public String scanQuadrant(int y, int x) {
+    public static String scanQuadrant(int y, int x) {
         return battleField[y][x];
     }
 
@@ -51,13 +51,19 @@ public class BattleField {
         }
     }
 
-    public boolean isEmpty(int row, int line) {
+    public static boolean isEmptyXY(int x, int y){
+        int y2 = ActionField.getQuadrantY(y);
+        int x2 = ActionField.getQuadrantX(x);
+        return battleField[y2][x2].trim().isEmpty();
+    }
+
+    public static boolean isEmpty(int row, int line) {
         return row + 1 > FIELD_SIZE || line + 1 > FIELD_SIZE || row < 0 || line < 0 ||
                 scanQuadrant(row, line).trim().isEmpty();
     }
 
     private void clearField() {
-        if (!isBattleFieldFilled()) return;
+        if (!isFilled()) return;
         for (int i = 0; i < FIELD_SIZE; i++) {
             for (int j = 0; j < FIELD_SIZE; j++) this.battleField[i][j] = "";
         }
@@ -69,7 +75,14 @@ public class BattleField {
                     replace("[,", "[ ,").replace(" B", "B").replace(",]", ", ]"));
     }
 
-    private boolean isBattleFieldFilled() {
+    public boolean isClean(){
+        for (String[] s1:battleField) for (String s2:s1) {
+            if (! s2.trim().isEmpty()) return false;
+        }
+        return true;
+    }
+
+    private boolean isFilled() {
         return !(this.battleField == null || this.battleField.length < 1 || this.battleField[0] == null);
     }
 

@@ -20,24 +20,30 @@ public class ActionField extends JPanel {
 
         tank.turn(RIGHT);
         tank.setQuadrantXY(5,5);
-        tank.fire();
-        tank.turn180();
-        tank.turn(UP);
-        tank.fire();
-        tank.turn180();
-        tank.fire();
-        tank.move(RIGHT);
-        tank.move(DOWN);
-        tank.move(LEFT);
-        tank.fire();
-        tank.turn180();
-        tank.fire();
-        tank.move();
-        tank.fire();
-        tank.move();
-        tank.fire();
-        tank.move();
-        tank.fire();
+        tank.moveToQuadrant(1,1);
+        tank.moveToQuadrant(1,9);
+        tank.moveToQuadrant(9,9);
+        for (int i=0;i<10;i++) tank.moveRandom();
+        tank.clean();
+
+//        tank.fire();
+//        tank.turn180();
+//        tank.turn(UP);
+//        tank.fire();
+//        tank.turn180();
+//        tank.fire();
+//        tank.move(RIGHT);
+//        tank.move(DOWN);
+//        tank.move(LEFT);
+//        tank.fire();
+//        tank.turn180();
+//        tank.fire();
+//        tank.move();
+//        tank.fire();
+//        tank.move();
+//        tank.fire();
+//        tank.move();
+//        tank.fire();
     }
 
     public Tank getTank() {

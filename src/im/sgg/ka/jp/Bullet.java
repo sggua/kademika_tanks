@@ -1,7 +1,7 @@
 package im.sgg.ka.jp;
 
 public class Bullet {
-    public final static int DELAY = 2;
+    public final static int DELAY = 5;
 
     public final static To UP = To.UP;
     public final static To DOWN = To.DOWN;
