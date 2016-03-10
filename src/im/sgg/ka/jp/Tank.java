@@ -9,7 +9,7 @@ import java.awt.*;
  * kademika.com
  */
 public class Tank extends JFrame {
-    public final static int DELAY = 50;
+    private final static int SPEED = 50;
     public final static byte STEP_LENGTH = 7;
     public final static int FIRST_STEP_DELTA = BattleField.QDRNT_SIZE % STEP_LENGTH;
     public final static To UP = To.UP;
@@ -17,15 +17,24 @@ public class Tank extends JFrame {
     public final static To LEFT = To.LEFT;
     public final static To RIGHT = To.RIGHT;
 
+    private static int delay;
     private int x, y;
     private To direction;
-    private ActionField af;
-    private BattleField bf;
+    private static ActionField af;
+    private static BattleField bf;
     private Bullet b;
 
     public final int MAX_COORD = (BattleField.FIELD_SIZE - 1) * BattleField.QDRNT_SIZE;
 
+
+    public Tank() throws HeadlessException {
+        this.setDelay();
+        this.setRandomPosition();
+        this.direction = RIGHT;
+    }
+
     public Tank(ActionField af, BattleField bf) {
+        this.setDelay();
         this.af = af;
         this.bf = bf;
         this.setRandomPosition();
@@ -33,6 +42,7 @@ public class Tank extends JFrame {
     }
 
     public Tank(ActionField af, BattleField bf, int x, int y, To direction) {
+        this.setDelay();
         this.af = af;
         this.bf = bf;
         this.x = x;
@@ -40,6 +50,16 @@ public class Tank extends JFrame {
         this.direction = direction;
     }
 
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay() {
+        this.delay = 5000/SPEED;
+    }
+    public void setDelay(int newDelay) {
+        this.delay = newDelay;
+    }
 
     public int getX() {
         return x;

@@ -22,6 +22,16 @@ public class ActionField extends JPanel {
         tank.setQuadrantXY(5,5);
         for (int i=0;i<10;i++) tank.moveRandom();
         tank.destroy();
+
+        tank = new BT7();
+        for (int i=0;i<10;i++) tank.moveRandom();
+        tank.destroy();
+
+        tank=new Tiger();
+        for (int i=0;i<10;i++) tank.moveRandom();
+        tank.destroy();
+
+
     }
 
     public Tank getTank() {
@@ -80,7 +90,7 @@ public class ActionField extends JPanel {
                 if (pixelsToMove == firstMove) t.updateX(Tank.FIRST_STEP_DELTA);
             }
             repaint();
-            Thread.sleep(Tank.DELAY);
+            Thread.sleep(t.getDelay());
             pixelsToMove -= Tank.STEP_LENGTH;
         }
         System.out.println("\t" + t.getX() + "_" + t.getX() + "\t\tDone!");
