@@ -10,7 +10,7 @@ public class BattleField {
     public final static int BF_BORDER = 10;            // frame.setMinimumSize(new Dimension(BF_WIDTH +10, BF_HEIGHT + 22 +10));
     public final static byte FIELD_SIZE = 9;
     public final static byte QDRNT_SIZE = 64;
-    final static int MAX_BRICKS_QTY = (int) (FIELD_SIZE * FIELD_SIZE / 1.5);
+    public final static int MAX_BRICKS_QTY = (int) (FIELD_SIZE * FIELD_SIZE / 1.5);
 
     private static String[][] battleField = new String[FIELD_SIZE][FIELD_SIZE];
 
@@ -25,7 +25,7 @@ public class BattleField {
     }
 
     public void updateQuadrant(int y, int x, String str) {
-        this.battleField[y][x] = str;
+        battleField[y][x] = str;
     }
 
     public int getDimentionX() {
@@ -36,10 +36,6 @@ public class BattleField {
         if (battleField != null && battleField[0] != null) {
             return battleField[0].length;
         } else return 0;
-    }
-
-    public void setBattleField(String[][] battleField) {
-        this.battleField = battleField;
     }
 
     public void randomField() {
@@ -57,7 +53,7 @@ public class BattleField {
         return battleField[y2][x2].trim().isEmpty();
     }
 
-    public static boolean isEmpty(int row, int line) {
+    public boolean isEmpty(int row, int line) {
         return row + 1 > FIELD_SIZE || line + 1 > FIELD_SIZE || row < 0 || line < 0 ||
                 scanQuadrant(row, line).trim().isEmpty();
     }
@@ -65,12 +61,12 @@ public class BattleField {
     private void clearField() {
         if (!isFilled()) return;
         for (int i = 0; i < FIELD_SIZE; i++) {
-            for (int j = 0; j < FIELD_SIZE; j++) this.battleField[i][j] = "";
+            for (int j = 0; j < FIELD_SIZE; j++) battleField[i][j] = "";
         }
     }
 
     public void printField() {
-        for (String[] s : this.battleField)
+        for (String[] s : battleField)
             System.out.println(Arrays.toString(s).
                     replace("[,", "[ ,").replace(" B", "B").replace(",]", ", ]"));
     }
@@ -83,7 +79,7 @@ public class BattleField {
     }
 
     private boolean isFilled() {
-        return !(this.battleField == null || this.battleField.length < 1 || this.battleField[0] == null);
+        return !(battleField == null || battleField.length < 1 || battleField[0] == null);
     }
 
     private static int intRandom(int mn, int mx) {
