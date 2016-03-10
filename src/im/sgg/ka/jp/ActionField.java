@@ -20,34 +20,31 @@ public class ActionField extends JPanel {
 
         tank.turn(RIGHT);
         tank.setQuadrantXY(5,5);
-        tank.moveToQuadrant(1,1);
-        tank.moveToQuadrant(1,9);
-        tank.moveToQuadrant(9,9);
         for (int i=0;i<10;i++) tank.moveRandom();
-        tank.clean();
-
-//        tank.fire();
-//        tank.turn180();
-//        tank.turn(UP);
-//        tank.fire();
-//        tank.turn180();
-//        tank.fire();
-//        tank.move(RIGHT);
-//        tank.move(DOWN);
-//        tank.move(LEFT);
-//        tank.fire();
-//        tank.turn180();
-//        tank.fire();
-//        tank.move();
-//        tank.fire();
-//        tank.move();
-//        tank.fire();
-//        tank.move();
-//        tank.fire();
+        tank.destroy();
     }
 
     public Tank getTank() {
         return tank;
+    }
+
+    public void setTank(Tank tank) {
+        this.tank = tank;
+    }
+
+    public void processDestroy(Tank t){
+        System.out.println("Destroying the tank("+t.getX()+","+t.getY()+") . . . ");
+//        this.x= -2 * BattleField.QDRNT_SIZE;
+//        this.y=this.x;
+
+//        setQuadrantXY(BattleField.FIELD_SIZE+1,BattleField.FIELD_SIZE+1);
+//        System.out.print("Current  coords: ("+this.getX()+";"+this.getY()+")\t");
+        t.setX(-100);
+        t.setY(-100);
+        repaint();
+
+        System.out.println("Done.");
+//        repaint();
     }
 
     public void processMove(Tank t) throws InterruptedException {
@@ -249,29 +246,24 @@ public class ActionField extends JPanel {
             }
         }
 
-//        if (tankExists(tank)) {                           // if tank exists
-//            System.out.println("\tTank coords (X, Y):"+tank.getX()+","+ tank.getY());
-        g.setColor(new Color(255, 0, 0));
-        g.fillRect(tank.getX(), tank.getY(), 64, 64);
 
-        g.setColor(new Color(0, 255, 0));
-        if (tank.getDirection() == UP) {
-            g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
-        } else if (tank.getDirection() == DOWN) {
-            g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
-        } else if (tank.getDirection() == LEFT) {
-            g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
-        } else {
-            g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
+        if (tank.getX()>=0 && tank.getY()>=0) {
+            g.setColor(new Color(255, 0, 0));
+            g.fillRect(tank.getX(), tank.getY(), 64, 64);
+
+            g.setColor(new Color(0, 255, 0));
+            if (tank.getDirection() == UP) {
+                g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
+            } else if (tank.getDirection() == DOWN) {
+                g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
+            } else if (tank.getDirection() == LEFT) {
+                g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
+            } else {
+                g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
+            }
         }
-//        }
-//        else System.out.println("No tank");
-
-//        if (bulletExists(bullet)) {                           // if bullet exists
         g.setColor(new Color(255, 255, 0));
         g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
-//        }
-//        else System.out.println("No bullet");
     }
 
 }

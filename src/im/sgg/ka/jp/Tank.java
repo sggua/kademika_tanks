@@ -1,6 +1,7 @@
 package im.sgg.ka.jp;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by sergiy on 29.02.16.
@@ -153,7 +154,7 @@ public class Tank extends JFrame {
         af.processFire(b);
     }
 
-    public void setRandomPosition() {
+    private void setRandomPosition() {
         int cornerSize = BattleField.FIELD_SIZE;  // size of left down corner
         setQuadrantXY(
                 intRandom(1, cornerSize),
@@ -162,10 +163,14 @@ public class Tank extends JFrame {
         System.out.println("Random tank coords (x,y): " + this.x + "," + this.y);
     }
 
-    public int intRandom(int min, int max) {
+    public void destroy(){
+        af.processDestroy(this);
+    }
+
+    private int intRandom(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
-    public To dirRandom() throws InterruptedException {
+    private To dirRandom() throws InterruptedException {
         byte a = (byte) (System.currentTimeMillis() % 10);
         int res;
         if (a < 5) {
@@ -246,4 +251,5 @@ public class Tank extends JFrame {
             fire();
         }
     }
+
 }
