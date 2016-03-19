@@ -45,17 +45,11 @@ public class ActionField extends JPanel {
 
     public void processDestroy(Tank t){
         System.out.println("Destroying the tank("+t.getX()+","+t.getY()+") . . . ");
-//        this.x= -2 * BattleField.QDRNT_SIZE;
-//        this.y=this.x;
-
-//        setQuadrantXY(BattleField.FIELD_SIZE+1,BattleField.FIELD_SIZE+1);
-//        System.out.print("Current  coords: ("+this.getX()+";"+this.getY()+")\t");
         t.setX(-100);
         t.setY(-100);
         repaint();
 
         System.out.println("Done.");
-//        repaint();
     }
 
     public void processMove(Tank t) throws InterruptedException {
