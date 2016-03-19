@@ -13,6 +13,7 @@ public class ActionField extends JPanel {
     private BattleField bf;
     private Tank tank;
     private Bullet bullet;
+    private Aggressor aggressor;
 
     public void runTheGame() throws Exception {
         this.bf.randomField();
@@ -209,6 +210,7 @@ public class ActionField extends JPanel {
         bf = new BattleField(this);
         tank = new Tank(this, bf);
         bullet = new Bullet(-100, -100);
+        aggressor = new Aggressor(this, bf);
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setLocation(750, 150);
@@ -257,6 +259,12 @@ public class ActionField extends JPanel {
         }
 
 
+        redrawTank(g, tank);
+        redrawTank(g, aggressor);
+
+    }
+
+    private void redrawTank(Graphics g, Tank tank){
         if (tank.getX()>=0 && tank.getY()>=0) {
             g.setColor(new Color(255, 0, 0));
             g.fillRect(tank.getX(), tank.getY(), 64, 64);

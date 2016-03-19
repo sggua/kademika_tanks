@@ -187,7 +187,7 @@ public class Tank extends JFrame {
         af.processDestroy(this);
     }
 
-    private int intRandom(int min, int max) {
+    protected int intRandom(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
     private To dirRandom() throws InterruptedException {
