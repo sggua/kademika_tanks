@@ -19,19 +19,22 @@ public class ActionField extends JPanel {
         this.bf.randomField();
         this.bf.printField();
 
-        tank.turn(RIGHT);
-        tank.setQuadrantXY(5,5);
-        for (int i=0;i<10;i++) tank.moveRandom();
-        tank.destroy();
+//        tank.turn(RIGHT);
+//        tank.setQuadrantXY(5,5);
+//        for (int i=0;i<10;i++) tank.moveRandom();
+//        tank.destroy();
+//
+//        tank = new BT7();
+//        for (int i=0;i<10;i++) tank.moveRandom();
+//        tank.destroy();
+//
+//        tank=new Tiger();
+//        for (int i=0;i<10;i++) tank.moveRandom();
+//        tank.destroy();
 
-        tank = new BT7();
-        for (int i=0;i<10;i++) tank.moveRandom();
+        tank= new BT7();
+        tank.clean();
         tank.destroy();
-
-        tank=new Tiger();
-        for (int i=0;i<10;i++) tank.moveRandom();
-        tank.destroy();
-
 
     }
 
@@ -152,6 +155,14 @@ public class ActionField extends JPanel {
                 bf.updateQuadrant(y, x, "");
                 return true;
             }
+            if (getQuadrantX(aggressor.getX())==getQuadrantX(bullet.getX())
+                    && getQuadrantY(aggressor.getY())==getQuadrantY(bullet.getY())) {
+                bf.updateQuadrant(y, x, "");
+                aggressor.destroy();
+                bullet.destroy();
+                return true;
+            }
+
         }
         return false;
     }
