@@ -147,7 +147,7 @@ public class ActionField extends JPanel {
 
     }
 
-    public boolean processInterception(BattleField bf, Bullet b) {
+    public boolean processInterception(BattleField bf, Bullet b) throws InterruptedException {
         if (b.isInField()) {
             int x = getQuadrantX(b.getX() + Bullet.HALF_SIZE);
             int y = getQuadrantY(b.getY() + Bullet.HALF_SIZE);
@@ -160,6 +160,9 @@ public class ActionField extends JPanel {
                 bf.updateQuadrant(y, x, "");
                 aggressor.destroy();
                 bullet.destroy();
+                aggressor = new Aggressor(this,bf);
+                Thread.sleep(3000);
+                repaint();
                 return true;
             }
 
