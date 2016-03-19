@@ -262,14 +262,20 @@ public class ActionField extends JPanel {
         redrawTank(g, tank);
         redrawTank(g, aggressor);
 
+        g.setColor(new Color(255, 255, 0));
+        g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
+
     }
 
     private void redrawTank(Graphics g, Tank tank){
         if (tank.getX()>=0 && tank.getY()>=0) {
-            g.setColor(new Color(255, 0, 0));
+            // main tank body
+            if (tank instanceof Aggressor) g.setColor(new Color(128, 0, 0));
+            else g.setColor(new Color(0, 128, 0));
             g.fillRect(tank.getX(), tank.getY(), 64, 64);
-
-            g.setColor(new Color(0, 255, 0));
+            // head of tank
+            if (tank instanceof Aggressor) g.setColor(new Color(255, 128, 0));
+            else g.setColor(new Color(0, 64, 0));
             if (tank.getDirection() == UP) {
                 g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
             } else if (tank.getDirection() == DOWN) {
@@ -280,8 +286,6 @@ public class ActionField extends JPanel {
                 g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
             }
         }
-        g.setColor(new Color(255, 255, 0));
-        g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
     }
 
 }
