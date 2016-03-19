@@ -47,7 +47,8 @@ public class BattleField {
         }
     }
 
-    public static boolean isEmptyXY(int x, int y){
+    public boolean isEmptyXY(int x, int y){
+        if (x<0 || y<0) return true;
         int y2 = ActionField.getQuadrantY(y);
         int x2 = ActionField.getQuadrantX(x);
         return battleField[y2][x2].trim().isEmpty();

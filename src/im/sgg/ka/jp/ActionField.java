@@ -149,23 +149,38 @@ public class ActionField extends JPanel {
 
     public boolean processInterception(BattleField bf, Bullet b) throws InterruptedException {
         if (b.isInField()) {
-            int x = getQuadrantX(b.getX() + Bullet.HALF_SIZE);
-            int y = getQuadrantY(b.getY() + Bullet.HALF_SIZE);
-            if (!bf.isEmpty(y, x)) {
-                bf.updateQuadrant(y, x, "");
+            int xB = getQuadrantX(b.getX() + Bullet.HALF_SIZE);
+            int yB = getQuadrantY(b.getY() + Bullet.HALF_SIZE);
+            if (!bf.isEmpty(yB, xB)) {
+                bf.updateQuadrant(yB, xB, "");
                 return true;
             }
-            if (getQuadrantX(aggressor.getX())==getQuadrantX(bullet.getX())
-                    && getQuadrantY(aggressor.getY())==getQuadrantY(bullet.getY())) {
-                bf.updateQuadrant(y, x, "");
-                aggressor.destroy();
-                bullet.destroy();
+            if (checkInterception(aggressor,b)) {
                 aggressor = new Aggressor(this,bf);
                 Thread.sleep(3000);
-                repaint();
-                return true;
+                repaint(); return true;
+            }
+            if (checkInterception(tank,b)) {
+                tank = new Tank(this,bf);
+                Thread.sleep(3000);
+                repaint(); return true;
             }
 
+        }
+        return false;
+    }
+
+    private boolean checkInterception(Tank t, Bullet b){
+        if (b.getTank().equals(t)) return false;
+        int xB = getQuadrantX(b.getX() + Bullet.HALF_SIZE);
+        int yB = getQuadrantY(b.getY() + Bullet.HALF_SIZE);
+        int xT = getQuadrantX(t.getX());
+        int yT = getQuadrantY(t.getY());
+        if (xT==xB && yT==yB) {
+            bf.updateQuadrant(yB, xB, "");
+            t.destroy();
+            b.destroy();
+            return true;
         }
         return false;
     }

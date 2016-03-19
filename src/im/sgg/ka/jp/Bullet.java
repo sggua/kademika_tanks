@@ -20,6 +20,7 @@ public class Bullet {
     private int y;
     private To direction;
     private boolean missed;
+    private Tank tank;
 
     public Bullet(int x, int y, To direction) {
         this.x = x;
@@ -37,6 +38,7 @@ public class Bullet {
         this.x=tank.getX();
         this.y=tank.getY();
         this.direction = tank.getDirection();
+        this.tank = tank;
     }
 
     public int getX() {
@@ -92,5 +94,13 @@ public class Bullet {
 
     public void setMissed(boolean missed) {
         this.missed = missed;
+    }
+
+    public Tank getTank() {
+        return tank;
+    }
+
+    public void setTank(Tank tank) {
+        this.tank = tank;
     }
 }

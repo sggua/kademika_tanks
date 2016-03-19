@@ -262,10 +262,10 @@ public class Tank extends JFrame {
     private void clearTheWay(To direction) throws Exception {
         turn(direction);repaint();
         if (	//! BattleField.isEmptyXY(this.x, this.y) ||
-                (direction==UP && ! BattleField.isEmptyXY(this.x, this.y-1)) ||
-                (direction==DOWN && ! BattleField.isEmptyXY(this.x, this.y+BattleField.QDRNT_SIZE)) ||
-                (direction==LEFT && ! BattleField.isEmptyXY(this.x-1, this.y)) ||
-                (direction==RIGHT && ! BattleField.isEmptyXY(this.x+BattleField.QDRNT_SIZE, this.y))
+                (direction==UP && ! bf.isEmptyXY(this.x, this.y-1)) ||
+                (direction==DOWN && ! bf.isEmptyXY(this.x, this.y+BattleField.QDRNT_SIZE)) ||
+                (direction==LEFT && ! bf.isEmptyXY(this.x-1, this.y)) ||
+                (direction==RIGHT && ! bf.isEmptyXY(this.x+BattleField.QDRNT_SIZE, this.y))
                 ) {
             System.out.println("Clear the way "+String.valueOf(direction)+"!");
             fire();
