@@ -13,7 +13,7 @@ public class ActionField extends JPanel {
     private BattleField bf;
     private Tank tank;
     private Bullet bullet;
-    private Aggressor aggressor;
+    private Tiger aggressor;
 
     public void runTheGame() throws Exception {
         this.bf.randomField();
@@ -156,7 +156,7 @@ public class ActionField extends JPanel {
                 return true;
             }
             if (checkInterception(aggressor,b)) {
-                aggressor = new Aggressor(this,bf);
+                aggressor = new Tiger(this,bf);
                 Thread.sleep(3000);
                 repaint(); return true;
             }
@@ -172,18 +172,30 @@ public class ActionField extends JPanel {
 
     private boolean checkInterception(Tank t, Bullet b){
         if (b.getTank().equals(t)) return false;
+        int armor =0;
+        if (t instanceof Tiger) {
+            armor = ((Tiger) t).getArmor();
+        }
         int xB = getQuadrantX(b.getX() + Bullet.HALF_SIZE);
         int yB = getQuadrantY(b.getY() + Bullet.HALF_SIZE);
         int xT = getQuadrantX(t.getX());
         int yT = getQuadrantY(t.getY());
         if (xT==xB && yT==yB) {
+            System.out.println("Fired at "+xT+","+yT);
             bf.updateQuadrant(yB, xB, "");
-            t.destroy();
             b.destroy();
+            if (armor==0) t.destroy();
+            else {
+                ((Tiger) t).setArmor(((Tiger) t).getArmor()-1);
+                System.out.println("Armor decreased to "+((Tiger) t).getArmor());
+                return false;
+            }
             return true;
         }
         return false;
     }
+
+
 
     public static String getDirectionText(To way) {
         return String.valueOf(way);
@@ -233,7 +245,7 @@ public class ActionField extends JPanel {
         bf = new BattleField(this);
         tank = new Tank(this, bf);
         bullet = new Bullet(-100, -100);
-        aggressor = new Aggressor(this, bf);
+        aggressor = new Tiger(this, bf);
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setLocation(750, 150);
