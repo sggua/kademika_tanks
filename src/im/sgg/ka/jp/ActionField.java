@@ -294,11 +294,26 @@ public class ActionField extends JPanel {
         }
 
 
-        redrawTank(g, tank);
-        redrawTank(g, aggressor);
+        redrawTank  (g, tank);
+        redrawTank  (g, aggressor);
+        redrawBullet(g, bullet);
+    }
 
-        g.setColor(new Color(255, 255, 0));
-        g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
+    private void redrawBullet(Graphics g, Bullet bullet){
+        // Light orange
+        g.setColor(new Color(240, 160, 0));
+        g.fillRect(bullet.getX()+4, bullet.getY()+2, 6, 10);
+        g.fillRect(bullet.getX()+2, bullet.getY()+4, 10, 6);
+        // Dark orange
+        g.setColor(new Color(240, 144, 0));
+        g.fillRect(bullet.getX()+6, bullet.getY()+2, 2, 2);
+        g.fillRect(bullet.getX()+2, bullet.getY()+6, 2, 2);
+        g.fillRect(bullet.getX()+10, bullet.getY()+6, 2, 2);
+        g.fillRect(bullet.getX()+6, bullet.getY()+10, 2, 2);
+        // Light yellow
+        g.setColor(new Color(255, 255, 128));
+        g.fillRect(bullet.getX()+4, bullet.getY()+4, 6, 6);
+
 
     }
 
