@@ -1,6 +1,8 @@
 package im.sgg.ka.jp;
 
-public class Bullet {
+import java.awt.*;
+
+public class Bullet implements Drawable, Destroyable {
     public final static int DELAY = 5;
 
     public final static To UP = To.UP;
@@ -22,11 +24,11 @@ public class Bullet {
     private boolean missed;
     private AbstractTank tank;
 
-    public Bullet(int x, int y, To direction) {
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-    }
+//    public Bullet(int x, int y, To direction) {
+//        this.x = x;
+//        this.y = y;
+//        this.direction = direction;
+//    }
 
     public Bullet(int x, int y) {
         this.x = x;
@@ -102,5 +104,23 @@ public class Bullet {
 
     public void setTank(AbstractTank tank) {
         this.tank = tank;
+    }
+
+
+    @Override
+    public void draw(Graphics g) {
+        // Light orange
+        g.setColor(new Color(240, 160, 0));
+        g.fillRect(x+4, y+2, 6, 10);
+        g.fillRect(x+2, y+4, 10, 6);
+        // Dark orange
+        g.setColor(new Color(240, 144, 0));
+        g.fillRect(x+6, y+2, 2, 2);
+        g.fillRect(x+2, y+6, 2, 2);
+        g.fillRect(x+10, y+6, 2, 2);
+        g.fillRect(x+6, y+10, 2, 2);
+        // Light yellow
+        g.setColor(new Color(255, 255, 128));
+        g.fillRect(x+4, y+4, 6, 6);
     }
 }

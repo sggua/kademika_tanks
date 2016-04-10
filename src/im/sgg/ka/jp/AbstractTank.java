@@ -8,7 +8,7 @@ import java.awt.*;
  * Java Developer lessons
  * kademika.com
  */
-public abstract class AbstractTank extends JFrame {
+public abstract class AbstractTank extends JFrame implements Drawable, Destroyable{
 
     public final static int SPEED = 70;
     public final static byte STEP_LENGTH = 7;
@@ -26,6 +26,8 @@ public abstract class AbstractTank extends JFrame {
     private int x, y, delay;
     private To direction;
     private Bullet b;
+    private Color colorBody = new Color(0, 128, 128);
+    private Color colorHead = new Color(0, 64, 64);
 
     public AbstractTank() throws HeadlessException {
     }
@@ -254,6 +256,24 @@ public abstract class AbstractTank extends JFrame {
         updateY(deltaY);
     }
 
+    public void draw(Graphics g){
+
+        if (x>=0 && y>=0) {
+            // tank body color
+            g.setColor(colorBody);
+            g.fillRect(x, y, 64, 64);
+
+            // tank head color
+            g.setColor(colorHead);
+            if (this.getDirection() == UP) {           g.fillRect(x + 20, y, 24, 34);          // UP
+            } else if (this.getDirection() == DOWN) {  g.fillRect(x + 20, y + 30, 24, 34);     // DOWN
+            } else if (this.getDirection() == LEFT) {  g.fillRect(x, y + 20, 34, 24);          // LEFT
+            } else {                                   g.fillRect(x + 30, y + 20, 34, 24);     // RIGHT
+            }
+        }
+    }
+
+
 //////////////////////////////////////////////////////////
 
     public ActionField getAf() {
@@ -317,4 +337,19 @@ public abstract class AbstractTank extends JFrame {
         this.delay = newDelay;
     }
 
+    public Color getColorHead() {
+        return colorHead;
+    }
+
+    public void setColorHead(Color colorHead) {
+        this.colorHead = colorHead;
+    }
+
+    public Color getColorBody() {
+        return colorBody;
+    }
+
+    public void setColorBody(Color colorBody) {
+        this.colorBody = colorBody;
+    }
 }

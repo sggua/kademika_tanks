@@ -22,5 +22,8 @@ public class Aggressor extends AbstractTank {
 //                Integer.parseInt(START_COORDS[rndStart].substring(0,1)),
 //                "");
 //        bf.printField();
+        setColorBody(new Color(128, 0, 0));
+        setColorHead(new Color(64, 0, 0));
+
     }
 }

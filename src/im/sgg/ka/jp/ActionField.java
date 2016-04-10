@@ -297,48 +297,49 @@ public class ActionField extends JPanel {
         }
 
 
-        redrawTank  (g, defender);
-        redrawTank  (g, aggressor);
-        redrawBullet(g, bullet);
-    }
-
-    private void redrawBullet(Graphics g, Bullet bullet){
-        // Light orange
-        g.setColor(new Color(240, 160, 0));
-        g.fillRect(bullet.getX()+4, bullet.getY()+2, 6, 10);
-        g.fillRect(bullet.getX()+2, bullet.getY()+4, 10, 6);
-        // Dark orange
-        g.setColor(new Color(240, 144, 0));
-        g.fillRect(bullet.getX()+6, bullet.getY()+2, 2, 2);
-        g.fillRect(bullet.getX()+2, bullet.getY()+6, 2, 2);
-        g.fillRect(bullet.getX()+10, bullet.getY()+6, 2, 2);
-        g.fillRect(bullet.getX()+6, bullet.getY()+10, 2, 2);
-        // Light yellow
-        g.setColor(new Color(255, 255, 128));
-        g.fillRect(bullet.getX()+4, bullet.getY()+4, 6, 6);
-
+        defender.draw(g);
+        aggressor.draw(g);
+        bullet.draw(g);
 
     }
 
-    private void redrawTank(Graphics g, AbstractTank tank){
-        if (tank.getX()>=0 && tank.getY()>=0) {
-            // main defender body
-            if (tank instanceof Aggressor) g.setColor(new Color(128, 0, 0));
-            else g.setColor(new Color(0, 128, 0));
-            g.fillRect(tank.getX(), tank.getY(), 64, 64);
-            // head of defender
-            if (tank instanceof Aggressor) g.setColor(new Color(255, 128, 0));
-            else g.setColor(new Color(0, 64, 0));
-            if (tank.getDirection() == UP) {
-                g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
-            } else if (tank.getDirection() == DOWN) {
-                g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
-            } else if (tank.getDirection() == LEFT) {
-                g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
-            } else {
-                g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
-            }
-        }
-    }
+//    private void redrawBullet(Graphics g, Bullet bullet){
+//        // Light orange
+//        g.setColor(new Color(240, 160, 0));
+//        g.fillRect(bullet.getX()+4, bullet.getY()+2, 6, 10);
+//        g.fillRect(bullet.getX()+2, bullet.getY()+4, 10, 6);
+//        // Dark orange
+//        g.setColor(new Color(240, 144, 0));
+//        g.fillRect(bullet.getX()+6, bullet.getY()+2, 2, 2);
+//        g.fillRect(bullet.getX()+2, bullet.getY()+6, 2, 2);
+//        g.fillRect(bullet.getX()+10, bullet.getY()+6, 2, 2);
+//        g.fillRect(bullet.getX()+6, bullet.getY()+10, 2, 2);
+//        // Light yellow
+//        g.setColor(new Color(255, 255, 128));
+//        g.fillRect(bullet.getX()+4, bullet.getY()+4, 6, 6);
+//
+//
+//    }
+
+//    private void redrawTank(Graphics g, AbstractTank tank){
+//        if (tank.getX()>=0 && tank.getY()>=0) {
+//            // main defender body
+//            if (tank instanceof Aggressor) g.setColor(new Color(128, 0, 0));
+//            else g.setColor(new Color(0, 128, 0));
+//            g.fillRect(tank.getX(), tank.getY(), 64, 64);
+//            // head of defender
+//            if (tank instanceof Aggressor) g.setColor(new Color(255, 128, 0));
+//            else g.setColor(new Color(0, 64, 0));
+//            if (tank.getDirection() == UP) {
+//                g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
+//            } else if (tank.getDirection() == DOWN) {
+//                g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
+//            } else if (tank.getDirection() == LEFT) {
+//                g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
+//            } else {
+//                g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
+//            }
+//        }
+//    }
 
 }

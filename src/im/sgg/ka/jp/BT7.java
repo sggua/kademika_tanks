@@ -16,6 +16,9 @@ public class BT7 extends AbstractTank {
     public BT7(ActionField af, BattleField bf) throws InterruptedException {
         super(af,bf);
         this.setDelay();
+        setColorBody(new Color(64, 128, 32));
+        setColorHead(new Color(64, 96, 0));
+
     }
 
     @Override
