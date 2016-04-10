@@ -32,7 +32,7 @@ public class ActionField extends JPanel {
 //        for (int i=0;i<10;i++) tank.moveRandom();
 //        tank.destroy();
 
-        tank= new BT7();
+        tank= new BT7(this,bf);
         tank.clean();
         tank.destroy();
 
