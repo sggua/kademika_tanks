@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public abstract class AbstractTank extends JFrame {
 
-    public final static int SPEED = 50;
+    public final static int SPEED = 70;
     public final static byte STEP_LENGTH = 7;
     public final static int FIRST_STEP_DELTA = BattleField.QDRNT_SIZE % STEP_LENGTH;
     public final static int MAX_COORD = (BattleField.FIELD_SIZE - 1) * BattleField.QDRNT_SIZE;

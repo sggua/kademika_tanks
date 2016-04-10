@@ -11,7 +11,7 @@ public class ActionField extends JPanel {
     public final static To RIGHT = To.RIGHT;
 
     private BattleField bf;
-    private AbstractTank tank;
+    private T34 defender;
     private Bullet bullet;
     private Tiger aggressor;
 
@@ -19,31 +19,31 @@ public class ActionField extends JPanel {
         this.bf.randomField();
         this.bf.printField();
 
-//        tank.turn(RIGHT);
-//        tank.setQuadrantXY(5,5);
-//        for (int i=0;i<10;i++) tank.moveRandom();
-//        tank.destroy();
+//        defender.turn(RIGHT);
+//        defender.setQuadrantXY(5,5);
+//        for (int i=0;i<10;i++) defender.moveRandom();
+//        defender.destroy();
 //
-//        tank = new BT7();
-//        for (int i=0;i<10;i++) tank.moveRandom();
-//        tank.destroy();
+//        defender = new BT7();
+//        for (int i=0;i<10;i++) defender.moveRandom();
+//        defender.destroy();
 //
-//        tank=new Tiger();
-//        for (int i=0;i<10;i++) tank.moveRandom();
-//        tank.destroy();
+//        defender=new Tiger();
+//        for (int i=0;i<10;i++) defender.moveRandom();
+//        defender.destroy();
 
-        tank= new BT7(this,bf);
-        tank.clean();
-        tank.destroy();
+        defender = new T34(this,bf);
+        defender.clean();
+        defender.destroy();
 
     }
 
-    public AbstractTank getTank() {
-        return tank;
+    public T34 getDefender() {
+        return defender;
     }
 
-    public void setTank(AbstractTank tank) {
-        this.tank = tank;
+    public void setDefender(T34 defender) {
+        this.defender = defender;
     }
 
     public void processDestroy(AbstractTank t){
@@ -119,8 +119,8 @@ public class ActionField extends JPanel {
     }
 
     public void processFire(Bullet b) throws Exception {
-        AbstractTank t = this.tank;
-        To direction = this.tank.getDirection();
+        AbstractTank t = this.defender;
+        To direction = this.defender.getDirection();
         this.bullet = b;
         this.bullet.setX(t.getX() + 25);
         this.bullet.setY(t.getY() + 25);
@@ -160,11 +160,11 @@ public class ActionField extends JPanel {
                 Thread.sleep(3000);
                 repaint(); return true;
             }
-//            if (checkInterception(tank,b)) {
-//                tank = new AbstractTank(this,bf);
-//                Thread.sleep(3000);
-//                repaint(); return true;
-//            }
+            if (checkInterception(defender,b)) {
+                defender = new T34(this,bf);
+                Thread.sleep(3000);
+                repaint(); return true;
+            }
 
         }
         return false;
@@ -246,7 +246,7 @@ public class ActionField extends JPanel {
 
     public ActionField() throws Exception {
         bf = new BattleField(this);
-        tank = new Tank(this, bf);
+        defender = new T34(this, bf);
         bullet = new Bullet(-100, -100);
         aggressor = new Tiger(this, bf);
 
@@ -297,7 +297,7 @@ public class ActionField extends JPanel {
         }
 
 
-        redrawTank  (g, tank);
+        redrawTank  (g, defender);
         redrawTank  (g, aggressor);
         redrawBullet(g, bullet);
     }
@@ -322,11 +322,11 @@ public class ActionField extends JPanel {
 
     private void redrawTank(Graphics g, AbstractTank tank){
         if (tank.getX()>=0 && tank.getY()>=0) {
-            // main tank body
+            // main defender body
             if (tank instanceof Aggressor) g.setColor(new Color(128, 0, 0));
             else g.setColor(new Color(0, 128, 0));
             g.fillRect(tank.getX(), tank.getY(), 64, 64);
-            // head of tank
+            // head of defender
             if (tank instanceof Aggressor) g.setColor(new Color(255, 128, 0));
             else g.setColor(new Color(0, 64, 0));
             if (tank.getDirection() == UP) {
