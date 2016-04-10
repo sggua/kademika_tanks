@@ -7,19 +7,19 @@ import java.awt.*;
  * Java Developer lessons
  * kademika.com
  */
-public class Aggressor extends Tank {
+public class Aggressor extends AbstractTank {
     public static final String [] START_COORDS = {"4_2","8_2","8_4"};
 
-    public Aggressor(ActionField af, BattleField bf) {
+    public Aggressor(ActionField af, BattleField bf) throws InterruptedException {
         super(af, bf);
-        int index = intRandom(0,START_COORDS.length-1);
+        int rndStart = ActionField.intRandom(0,START_COORDS.length-1);
         this.setQuadrantXY(
-                Integer.parseInt(START_COORDS[index].substring(0,1)),
-                Integer.parseInt(START_COORDS[index].substring(2,3))
+                Integer.parseInt(START_COORDS[rndStart].substring(0,1)),
+                Integer.parseInt(START_COORDS[rndStart].substring(2,3))
         );
 //        bf.updateQuadrant(
-//                Integer.parseInt(START_COORDS[index].substring(2,3)),
-//                Integer.parseInt(START_COORDS[index].substring(0,1)),
+//                Integer.parseInt(START_COORDS[rndStart].substring(2,3)),
+//                Integer.parseInt(START_COORDS[rndStart].substring(0,1)),
 //                "");
 //        bf.printField();
     }

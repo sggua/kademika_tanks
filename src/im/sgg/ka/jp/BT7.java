@@ -7,13 +7,13 @@ import java.awt.*;
  * Java Developer lessons
  * kademika.com
  */
-public class BT7 extends Tank {
+public class BT7 extends AbstractTank {
 
 //    public BT7() {
 //        super();
 //    }
 
-    public BT7(ActionField af, BattleField bf) {
+    public BT7(ActionField af, BattleField bf) throws InterruptedException {
         super(af,bf);
         this.setDelay();
     }

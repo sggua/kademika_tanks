@@ -11,7 +11,7 @@ public class ActionField extends JPanel {
     public final static To RIGHT = To.RIGHT;
 
     private BattleField bf;
-    private Tank tank;
+    private AbstractTank tank;
     private Bullet bullet;
     private Tiger aggressor;
 
@@ -38,15 +38,15 @@ public class ActionField extends JPanel {
 
     }
 
-    public Tank getTank() {
+    public AbstractTank getTank() {
         return tank;
     }
 
-    public void setTank(Tank tank) {
+    public void setTank(AbstractTank tank) {
         this.tank = tank;
     }
 
-    public void processDestroy(Tank t){
+    public void processDestroy(AbstractTank t){
         System.out.println("Destroying the tank("+t.getX()+","+t.getY()+") . . . ");
         t.setX(-100);
         t.setY(-100);
@@ -55,7 +55,7 @@ public class ActionField extends JPanel {
         System.out.println("Done.");
     }
 
-    public void processMove(Tank t) throws InterruptedException {
+    public void processMove(AbstractTank t) throws InterruptedException {
         System.out.print("Moving from (" + t.getX() + ";" + t.getY() + ")");
         To dir=t.getDirection();
         t.turn(dir);
@@ -64,43 +64,43 @@ public class ActionField extends JPanel {
             System.out.println("\tCan't move " + getDirectionText(dir));
             return;
         }
-        int firstMove = BattleField.QDRNT_SIZE - Tank.FIRST_STEP_DELTA;
+        int firstMove = BattleField.QDRNT_SIZE - AbstractTank.FIRST_STEP_DELTA;
         int pixelsToMove = firstMove;
         while (pixelsToMove > 0) {
             if (dir == UP) {
                 System.out.print("\tUP   ");
-                t.updateY(-Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateY(-Tank.FIRST_STEP_DELTA);
+                t.updateY(-AbstractTank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateY(-AbstractTank.FIRST_STEP_DELTA);
 
             } else if (dir == DOWN) {
                 System.out.print("\tDOWN  ");
-                t.updateY(Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateY(Tank.FIRST_STEP_DELTA);
+                t.updateY(AbstractTank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateY(AbstractTank.FIRST_STEP_DELTA);
 
             } else if (dir == LEFT) {
                 System.out.print("\tLEFT  ");
-                t.updateX(-Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateX(-Tank.FIRST_STEP_DELTA);
+                t.updateX(-AbstractTank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateX(-AbstractTank.FIRST_STEP_DELTA);
 
             } else if (dir == RIGHT) {
                 System.out.print("\tRIGHT ");
-                t.updateX(Tank.STEP_LENGTH);
-                if (pixelsToMove == firstMove) t.updateX(Tank.FIRST_STEP_DELTA);
+                t.updateX(AbstractTank.STEP_LENGTH);
+                if (pixelsToMove == firstMove) t.updateX(AbstractTank.FIRST_STEP_DELTA);
             }
             repaint();
             Thread.sleep(t.getDelay());
-            pixelsToMove -= Tank.STEP_LENGTH;
+            pixelsToMove -= AbstractTank.STEP_LENGTH;
         }
         System.out.println("\t" + t.getX() + "_" + t.getX() + "\t\tDone!");
 
     }
 
-    public void processTurn(Tank t, To dir) {
+    public void processTurn(AbstractTank t, To dir) {
         t.setDirection(dir);
         repaint();
     }
 
-    public void processTurn180(Tank t){
+    public void processTurn180(AbstractTank t){
         switch (t.getDirection()) {
             case LEFT:
                 t.setDirection(RIGHT);
@@ -119,7 +119,7 @@ public class ActionField extends JPanel {
     }
 
     public void processFire(Bullet b) throws Exception {
-        Tank t = this.tank;
+        AbstractTank t = this.tank;
         To direction = this.tank.getDirection();
         this.bullet = b;
         this.bullet.setX(t.getX() + 25);
@@ -160,17 +160,17 @@ public class ActionField extends JPanel {
                 Thread.sleep(3000);
                 repaint(); return true;
             }
-            if (checkInterception(tank,b)) {
-                tank = new Tank(this,bf);
-                Thread.sleep(3000);
-                repaint(); return true;
-            }
+//            if (checkInterception(tank,b)) {
+//                tank = new AbstractTank(this,bf);
+//                Thread.sleep(3000);
+//                repaint(); return true;
+//            }
 
         }
         return false;
     }
 
-    private boolean checkInterception(Tank t, Bullet b){
+    private boolean checkInterception(AbstractTank t, Bullet b){
         if (b.getTank().equals(t)) return false;
         int armor =0;
         if (t instanceof Tiger) {
@@ -229,8 +229,11 @@ public class ActionField extends JPanel {
         return y / BattleField.QDRNT_SIZE;
     }
 
+    public static int intRandom(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
 
-//    boolean tankExists(Tank t) {
+//    boolean tankExists(AbstractTank t) {
 //        return t == null ? false : true;
 //    }
 //
@@ -317,7 +320,7 @@ public class ActionField extends JPanel {
 
     }
 
-    private void redrawTank(Graphics g, Tank tank){
+    private void redrawTank(Graphics g, AbstractTank tank){
         if (tank.getX()>=0 && tank.getY()>=0) {
             // main tank body
             if (tank instanceof Aggressor) g.setColor(new Color(128, 0, 0));

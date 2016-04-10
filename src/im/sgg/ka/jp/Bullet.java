@@ -20,7 +20,7 @@ public class Bullet {
     private int y;
     private To direction;
     private boolean missed;
-    private Tank tank;
+    private AbstractTank tank;
 
     public Bullet(int x, int y, To direction) {
         this.x = x;
@@ -34,7 +34,7 @@ public class Bullet {
         this.direction = RIGHT;
     }
 
-    public Bullet(Tank tank) {
+    public Bullet(AbstractTank tank) {
         this.x=tank.getX();
         this.y=tank.getY();
         this.direction = tank.getDirection();
@@ -96,11 +96,11 @@ public class Bullet {
         this.missed = missed;
     }
 
-    public Tank getTank() {
+    public AbstractTank getTank() {
         return tank;
     }
 
-    public void setTank(Tank tank) {
+    public void setTank(AbstractTank tank) {
         this.tank = tank;
     }
 }

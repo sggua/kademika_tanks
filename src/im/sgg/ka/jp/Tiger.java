@@ -11,11 +11,11 @@ public class Tiger extends Aggressor {
     private int armor;
 
 
-    public Tiger(ActionField af, BattleField bf) {
+    public Tiger(ActionField af, BattleField bf) throws InterruptedException {
         this(af, bf,1);
     }
 
-    public Tiger(ActionField af, BattleField bf, int armor) {
+    public Tiger(ActionField af, BattleField bf, int armor) throws InterruptedException {
         super(af, bf);
         this.armor = armor;
     }
