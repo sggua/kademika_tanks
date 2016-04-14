@@ -1,4 +1,7 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.tanks;
+
+import im.sgg.ka.jp.ActionField;
+import im.sgg.ka.jp.BattleField;
 
 /**
  * Created by sergiy on 10.03.16.

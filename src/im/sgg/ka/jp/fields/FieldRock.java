@@ -1,4 +1,6 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.fields;
+
+import im.sgg.ka.jp.tanks.Tiger;
 
 import java.awt.*;
 

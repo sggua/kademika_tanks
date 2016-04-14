@@ -1,4 +1,6 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.fields;
+
+import im.sgg.ka.jp.abstracts.AbstractField;
 
 /**
  * Created by sergiy on 12.04.16.

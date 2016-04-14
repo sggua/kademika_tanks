@@ -1,8 +1,12 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.tanks;
+
+import im.sgg.ka.jp.abstracts.AbstractTank;
+import im.sgg.ka.jp.ActionField;
+import im.sgg.ka.jp.BattleField;
 
 import java.awt.*;
 
-public class T34 extends AbstractTank{
+public class T34 extends AbstractTank {
 
 //    public T34() {
 //        this.setDelay();

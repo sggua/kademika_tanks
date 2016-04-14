@@ -1,4 +1,7 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.abstracts;
+
+import im.sgg.ka.jp.ActionField;
+import im.sgg.ka.jp.BattleField;
 
 import java.awt.*;
 

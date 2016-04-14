@@ -1,5 +1,10 @@
 package im.sgg.ka.jp;
 
+import im.sgg.ka.jp.fields.FieldBrick;
+import im.sgg.ka.jp.fields.FieldEagle;
+import im.sgg.ka.jp.fields.FieldRock;
+import im.sgg.ka.jp.fields.FieldWater;
+
 import java.util.Arrays;
 
 
@@ -16,7 +21,7 @@ public class BattleField {
 
     private FieldBrick[][] fieldBricks = new FieldBrick[FIELD_SIZE][FIELD_SIZE];
     private FieldWater[][] fieldWaters = new FieldWater[FIELD_SIZE][FIELD_SIZE];
-    private FieldRock [][] fieldRocks = new FieldRock[FIELD_SIZE][FIELD_SIZE];
+    private FieldRock[][] fieldRocks = new FieldRock[FIELD_SIZE][FIELD_SIZE];
     private FieldEagle fieldEagle = new FieldEagle();
 
     private ActionField af;

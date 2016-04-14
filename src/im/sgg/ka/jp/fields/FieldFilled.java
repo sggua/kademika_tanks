@@ -1,4 +1,7 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.fields;
+
+import im.sgg.ka.jp.abstracts.AbstractField;
+import im.sgg.ka.jp.interfaces.Drawable;
 
 import java.awt.*;
 
@@ -7,7 +10,7 @@ import java.awt.*;
  * Java Developer lessons
  * kademika.com
  */
-public abstract class FieldFilled extends AbstractField implements Drawable{
+public abstract class FieldFilled extends AbstractField implements Drawable {
 
     public FieldFilled() {
     }

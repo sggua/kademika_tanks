@@ -1,5 +1,13 @@
 package im.sgg.ka.jp;
 
+import im.sgg.ka.jp.abstracts.AbstractTank;
+import im.sgg.ka.jp.enums.To;
+import im.sgg.ka.jp.fields.FieldBrick;
+import im.sgg.ka.jp.fields.FieldRock;
+import im.sgg.ka.jp.fields.FieldWater;
+import im.sgg.ka.jp.tanks.T34;
+import im.sgg.ka.jp.tanks.Tiger;
+
 import javax.swing.*;
 import java.awt.*;
 

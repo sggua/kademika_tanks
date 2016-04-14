@@ -1,4 +1,9 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.abstracts;
+
+import im.sgg.ka.jp.*;
+import im.sgg.ka.jp.enums.To;
+import im.sgg.ka.jp.interfaces.Destroyable;
+import im.sgg.ka.jp.interfaces.Drawable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +13,7 @@ import java.awt.*;
  * Java Developer lessons
  * kademika.com
  */
-public abstract class AbstractTank extends JFrame implements Drawable, Destroyable{
+public abstract class AbstractTank extends JFrame implements Drawable, Destroyable {
 
     public final static int SPEED = 70;
     public final static byte STEP_LENGTH = 7;

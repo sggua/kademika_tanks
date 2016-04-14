@@ -1,5 +1,10 @@
 package im.sgg.ka.jp;
 
+import im.sgg.ka.jp.abstracts.AbstractTank;
+import im.sgg.ka.jp.enums.To;
+import im.sgg.ka.jp.interfaces.Destroyable;
+import im.sgg.ka.jp.interfaces.Drawable;
+
 import java.awt.*;
 
 public class Bullet implements Drawable, Destroyable {

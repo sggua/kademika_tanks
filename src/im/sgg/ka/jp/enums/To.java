@@ -1,4 +1,4 @@
-package im.sgg.ka.jp;
+package im.sgg.ka.jp.enums;
 
 public enum To {
     LEFT, RIGHT, UP, DOWN;
