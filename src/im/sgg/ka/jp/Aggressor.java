@@ -10,6 +10,9 @@ import java.awt.*;
 public class Aggressor extends AbstractTank {
     public static final String [] START_COORDS = {"4_2","8_2","8_4"};
 
+    public Aggressor() {
+
+    }
     public Aggressor(ActionField af, BattleField bf) throws InterruptedException {
         super(af, bf);
         int rndStart = ActionField.intRandom(0,START_COORDS.length-1);
@@ -26,4 +29,5 @@ public class Aggressor extends AbstractTank {
         setColorHead(new Color(64, 0, 0));
 
     }
+
 }

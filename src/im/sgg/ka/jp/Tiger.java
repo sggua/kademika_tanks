@@ -1,7 +1,5 @@
 package im.sgg.ka.jp;
 
-import java.awt.*;
-
 /**
  * Created by sergiy on 10.03.16.
  * Java Developer lessons
@@ -10,6 +8,9 @@ import java.awt.*;
 public class Tiger extends Aggressor {
     private int armor;
 
+    public Tiger() {
+        super();
+    }
 
     public Tiger(ActionField af, BattleField bf) throws InterruptedException {
         this(af, bf,1);

@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class ActionField extends JPanel {
     final boolean COLORED_MODE = false;
+    public final static Color DEFAULT_COLOR = new Color(32, 32, 32);
     public final static To UP = To.UP;
     public final static To DOWN = To.DOWN;
     public final static To LEFT = To.LEFT;
@@ -16,7 +17,8 @@ public class ActionField extends JPanel {
     private Tiger aggressor;
 
     public void runTheGame() throws Exception {
-        this.bf.randomField();
+//        this.bf.randomField();
+        this.bf.initField();
         this.bf.printField();
 
 //        defender.turn(RIGHT);
@@ -172,7 +174,7 @@ public class ActionField extends JPanel {
 
     private boolean checkInterception(AbstractTank t, Bullet b){
         if (b.getTank().equals(t)) return false;
-        int armor =0;
+        int armor = 0;
         if (t instanceof Tiger) {
             armor = ((Tiger) t).getArmor();
         }
@@ -242,6 +244,7 @@ public class ActionField extends JPanel {
 //    }
 
 
+
 /*MAGIC BELOW*/
 
     public ActionField() throws Exception {
@@ -249,6 +252,8 @@ public class ActionField extends JPanel {
         defender = new T34(this, bf);
         bullet = new Bullet(-100, -100);
         aggressor = new Tiger(this, bf);
+
+
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setLocation(750, 150);
@@ -275,7 +280,7 @@ public class ActionField extends JPanel {
                         cc = new Color(233, 243, 255);
                     }
                 } else {
-                    cc = new Color(180, 180, 180);
+                    cc = DEFAULT_COLOR;
                 }
                 i++;
                 g.setColor(cc);
@@ -283,19 +288,25 @@ public class ActionField extends JPanel {
             }
         }
 
-        for (int j = 0; j < bf.getDimentionY(); j++) {
-            for (int k = 0; k < bf.getDimentionX(); k++) {
-                if (bf.scanQuadrant(j, k).equals("B")) {
-                    String coordinates = getQuadrantXY(j + 1, k + 1);
-                    int separator = coordinates.indexOf("_");
-                    int y = Integer.parseInt(coordinates.substring(0, separator));
-                    int x = Integer.parseInt(coordinates.substring(separator + 1));
-                    g.setColor(new Color(0, 0, 255));
-                    g.fillRect(x, y, 64, 64);
-                }
-            }
-        }
+//        for (int j = 0; j < bf.getDimentionY(); j++) {
+//            for (int k = 0; k < bf.getDimentionX(); k++) {
+//                if (bf.scanQuadrant(j, k).equals("B")) {
+//                    String coordinates = getQuadrantXY(j + 1, k + 1);
+//                    int separator = coordinates.indexOf("_");
+//                    int y = Integer.parseInt(coordinates.substring(0, separator));
+//                    int x = Integer.parseInt(coordinates.substring(separator + 1));
+//                    g.setColor(new Color(0, 0, 255));
+//                    g.fillRect(x, y, 64, 64);
+//                }
+//            }
+//        }
 
+
+        for (FieldBrick[] ff : bf.getFieldBricks())  if (ff!=null) for (FieldBrick f : ff ) if (f!=null) f.draw(g);
+        for (FieldRock[]  ff : bf.getFieldRocks())   if (ff!=null) for (FieldRock f : ff )  if (f!=null) f.draw(g);
+        for (FieldWater[] ff : bf.getFieldWaters())  if (ff!=null) for (FieldWater f : ff ) if (f!=null) f.draw(g);
+
+        bf.getFieldEagle().draw(g);
 
         defender.draw(g);
         aggressor.draw(g);

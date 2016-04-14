@@ -14,10 +14,26 @@ public class BattleField {
 
     private static String[][] battleField = new String[FIELD_SIZE][FIELD_SIZE];
 
+    private FieldBrick[][] fieldBricks = new FieldBrick[FIELD_SIZE][FIELD_SIZE];
+    private FieldWater[][] fieldWaters = new FieldWater[FIELD_SIZE][FIELD_SIZE];
+    private FieldRock [][] fieldRocks = new FieldRock[FIELD_SIZE][FIELD_SIZE];
+    private FieldEagle fieldEagle = new FieldEagle();
+
     private ActionField af;
 
     public BattleField(ActionField af) {
         this.af = af;
+        this.battleField = new String[][]{
+                {" ", " ", " ", " ", " ", " ", " ", "B", " "},
+                {" ", "B", "W", "R", " ", "B", " ", " ", " "},
+                {" ", " ", "B", "W", "W", "W", " ", "R", " "},
+                {" ", " ", " ", " ", "W", "W", "B", " ", " "},
+                {" ", "B", " ", " ", " ", " ", " ", " ", " "},
+                {"R", "W", " ", " ", " ", " ", " ", "B", "R"},
+                {" ", "W", " ", "B", "B", "B", " ", " ", " "},
+                {" ", "B", " ", "B", " ", "B", " ", " ", " "},
+                {" ", " ", " ", "B", "E", "B", " ", "R", "B"},
+        };
     }
 
     public String scanQuadrant(int y, int x) {
@@ -69,7 +85,17 @@ public class BattleField {
     public void printField() {
         for (String[] s : battleField)
             System.out.println(Arrays.toString(s).
-                    replace("[,", "[ ,").replace(" B", "B").replace(",]", ", ]"));
+                    replace("[,", "[ ,")
+                    .replace(" B", "B")
+                    .replace(" R", "R")
+                    .replace(" W", "W")
+                    .replace(" E", "E")
+                    .replace(",B", ", B")
+                    .replace(",R", ", R")
+                    .replace(",W", ", W")
+                    .replace(",E", ", E")
+                    .replace(",]", ", ]")
+            );
     }
 
     public boolean isClean(){
@@ -85,5 +111,71 @@ public class BattleField {
 
     private static int intRandom(int mn, int mx) {
         return (int) (Math.random() * (mx - mn + 1) + mn);
+    }
+
+    public void initField() {
+        for (int i=0; i< FIELD_SIZE; i++ ) {
+            for (int j=0; j<FIELD_SIZE; j++) {
+                if (battleField[i][j].equals("B")) {
+                    this.fieldBricks[i][j] = new FieldBrick(
+                            ActionField.getQuadrantCoordY(j+1),ActionField.getQuadrantCoordX(i+1)
+                    );
+                } else if (battleField[i][j].equals("R")) {
+                    this.fieldRocks[i][j] = new FieldRock(
+                            ActionField.getQuadrantCoordY(j+1),ActionField.getQuadrantCoordX(i+1)
+                    );
+                } else if (battleField[i][j].equals("W")) {
+                    this.fieldWaters[i][j] = new FieldWater(
+                            ActionField.getQuadrantCoordY(j+1),ActionField.getQuadrantCoordX(i+1)
+                    );
+                } else if (battleField[i][j].equals("E")) {
+                    this.fieldEagle = new FieldEagle(
+                            ActionField.getQuadrantCoordY(j+1),ActionField.getQuadrantCoordX(i+1)
+                    );
+                }
+
+            }
+
+        }
+    }
+
+    public static String[][] getBattleField() {
+        return battleField;
+    }
+
+    public static void setBattleField(String[][] battleField) {
+        BattleField.battleField = battleField;
+    }
+
+    public FieldBrick[][] getFieldBricks() {
+        return fieldBricks;
+    }
+
+    public void setFieldBricks(FieldBrick[][] fieldBricks) {
+        this.fieldBricks = fieldBricks;
+    }
+
+    public FieldWater[][] getFieldWaters() {
+        return fieldWaters;
+    }
+
+    public void setFieldWaters(FieldWater[][] fieldWaters) {
+        this.fieldWaters = fieldWaters;
+    }
+
+    public FieldRock[][] getFieldRocks() {
+        return fieldRocks;
+    }
+
+    public void setFieldRocks(FieldRock[][] fieldRocks) {
+        this.fieldRocks = fieldRocks;
+    }
+
+    public FieldEagle getFieldEagle() {
+        return fieldEagle;
+    }
+
+    public void setFieldEagle(FieldEagle fieldEagle) {
+        this.fieldEagle = fieldEagle;
     }
 }
